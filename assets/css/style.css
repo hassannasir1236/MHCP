@@ -192,6 +192,19 @@ footer{background:var(--navy-deep);padding:56px 5% 28px;color:rgba(255,255,255,.
   .lender-row{gap:16px;padding:16px 12px}
   .lender-card img{max-width:130px;height:36px;max-height:36px}
 }
+/* community videos */
+.video-section{background:var(--off-white);border-top:1px solid var(--rule)}
+.video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;max-width:1100px;margin:0 auto}
+.video-card{background:#fff;border:1px solid var(--rule);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
+.video-frame{position:relative;background:var(--navy-deep);aspect-ratio:16/9}
+.video-frame video{width:100%;height:100%;display:block;object-fit:cover;vertical-align:middle}
+.video-body{padding:22px 22px 24px}
+.video-body .eyebrow{margin-bottom:8px}
+.video-body h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.video-body p{font-size:14px;color:var(--muted);line-height:1.65}
+@media(max-width:800px){
+  .video-grid{grid-template-columns:1fr;gap:20px;max-width:560px}
+}
 .fine{font-size:12px;color:var(--muted);max-width:640px;margin:0 auto;text-align:center;line-height:1.6}
 /* testimonials */
 .testimonials{background:#fff;border-top:1px solid var(--rule)}
