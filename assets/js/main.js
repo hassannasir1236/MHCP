@@ -136,6 +136,7 @@ function escapeHtml(str){
 }
 
 function initTestimonials(){
+  const section = document.getElementById("reviews");
   const track = document.getElementById("t-track");
   const slider = track && track.parentElement;
   const prevBtn = document.getElementById("t-prev");
@@ -143,11 +144,33 @@ function initTestimonials(){
   const dotsEl = document.getElementById("t-dots");
   if (!track || !slider || !prevBtn || !nextBtn) return;
 
+  const parkFilter = (window.TESTIMONIALS_PARK || (section && section.getAttribute("data-park")) || "").trim();
+  const list = parkFilter
+    ? TESTIMONIALS.filter(t => t.property.toLowerCase() === parkFilter.toLowerCase())
+    : TESTIMONIALS.slice();
+
+  if (!list.length){
+    if (section) section.style.display = "none";
+    return;
+  }
+
   const COLLAPSE_LEN = 140;
   const GAP_DESKTOP = 24;
   const GAP_MOBILE = 16;
+  const showSlider = list.length >= 4;
 
-  track.innerHTML = TESTIMONIALS.map((t, i) => {
+  const navEl = document.querySelector(".t-nav");
+  const hintEl = document.querySelector(".t-hint");
+  if (!showSlider){
+    if (navEl) navEl.style.display = "none";
+    if (dotsEl) dotsEl.style.display = "none";
+    if (hintEl) hintEl.style.display = "none";
+    slider.style.cursor = "default";
+    slider.classList.add("t-static");
+    track.classList.add("t-static-track");
+  }
+
+  track.innerHTML = list.map((t, i) => {
     const propertyHtml = t.link
       ? '<a href="' + escapeHtml(t.link) + '" target="_blank" rel="noopener">' + escapeHtml(t.property) + '</a>'
       : escapeHtml(t.property);
@@ -181,7 +204,7 @@ function initTestimonials(){
   }
 
   function maxIndex(){
-    return Math.max(0, TESTIMONIALS.length - perView);
+    return Math.max(0, list.length - perView);
   }
 
   function stepSize(){
@@ -203,6 +226,10 @@ function initTestimonials(){
   }
 
   function goTo(i, animate){
+    if (!showSlider){
+      track.style.transform = "none";
+      return;
+    }
     updatePerView();
     index = Math.max(0, Math.min(i, maxIndex()));
     if (animate === false) track.classList.add("is-dragging");
@@ -249,6 +276,7 @@ function initTestimonials(){
   }
 
   function onPointerDown(clientX){
+    if (!showSlider) return;
     dragging = true;
     dragStartX = clientX;
     dragDelta = 0;
@@ -275,35 +303,35 @@ function initTestimonials(){
     setTimeout(function(){ dragDelta = 0; }, 50);
   }
 
-  // Touch swipe
-  slider.addEventListener("touchstart", function(e){
-    if (e.touches.length !== 1) return;
-    onPointerDown(e.touches[0].clientX);
-  }, {passive: true});
+  if (showSlider){
+    slider.addEventListener("touchstart", function(e){
+      if (e.touches.length !== 1) return;
+      onPointerDown(e.touches[0].clientX);
+    }, {passive: true});
 
-  slider.addEventListener("touchmove", function(e){
-    if (!dragging || e.touches.length !== 1) return;
-    onPointerMove(e.touches[0].clientX);
-  }, {passive: true});
+    slider.addEventListener("touchmove", function(e){
+      if (!dragging || e.touches.length !== 1) return;
+      onPointerMove(e.touches[0].clientX);
+    }, {passive: true});
 
-  slider.addEventListener("touchend", onPointerUp, {passive: true});
-  slider.addEventListener("touchcancel", onPointerUp, {passive: true});
+    slider.addEventListener("touchend", onPointerUp, {passive: true});
+    slider.addEventListener("touchcancel", onPointerUp, {passive: true});
 
-  // Mouse drag (desktop too)
-  slider.addEventListener("mousedown", function(e){
-    if (e.button !== 0) return;
-    if (e.target.closest("a,button")) return;
-    e.preventDefault();
-    onPointerDown(e.clientX);
-  });
-  window.addEventListener("mousemove", function(e){
-    if (!dragging) return;
-    onPointerMove(e.clientX);
-  });
-  window.addEventListener("mouseup", function(){
-    if (!dragging) return;
-    onPointerUp();
-  });
+    slider.addEventListener("mousedown", function(e){
+      if (e.button !== 0) return;
+      if (e.target.closest("a,button")) return;
+      e.preventDefault();
+      onPointerDown(e.clientX);
+    });
+    window.addEventListener("mousemove", function(e){
+      if (!dragging) return;
+      onPointerMove(e.clientX);
+    });
+    window.addEventListener("mouseup", function(){
+      if (!dragging) return;
+      onPointerUp();
+    });
+  }
 
   let resizeTimer;
   window.addEventListener("resize", function(){
@@ -314,4 +342,34 @@ function initTestimonials(){
   goTo(0);
 }
 
-document.addEventListener("DOMContentLoaded", initTestimonials);
+document.addEventListener("DOMContentLoaded", function(){
+  initTestimonials();
+  initPhoneMenu();
+});
+
+function initPhoneMenu(){
+  const wrap = document.querySelector(".nav-phone");
+  if (!wrap) return;
+  const btn = wrap.querySelector(".nav-phone-btn");
+  if (!btn) return;
+
+  btn.addEventListener("click", function(e){
+    e.stopPropagation();
+    const open = wrap.classList.toggle("is-open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  document.addEventListener("click", function(e){
+    if (!wrap.contains(e.target)){
+      wrap.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape"){
+      wrap.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+}
