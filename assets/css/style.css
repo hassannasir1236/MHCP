@@ -105,21 +105,23 @@ nav a:hover{color:#fff}
 footer{background:var(--navy-deep);padding:56px 5% 28px;color:rgba(255,255,255,.65)}
 .foot-top{
   display:grid;
-  grid-template-columns:1.4fr 1fr 1.3fr 1fr;
-  gap:32px 28px;
+  grid-template-columns:minmax(220px,1.5fr) repeat(3,minmax(140px,1fr));
+  gap:40px 48px;
   align-items:start;
+  justify-content:space-between;
+  width:100%;
   padding-bottom:36px;
   border-bottom:1px solid rgba(255,255,255,.1);
-  margin:0 auto 22px;
-  max-width:1100px;
+  margin:0 0 22px;
+  max-width:none;
 }
-.foot-brand{max-width:100%;min-width:0}
+.foot-brand{max-width:320px;min-width:0}
 .foot-tagline{font-size:13px;color:rgba(255,255,255,.45);margin-top:10px;line-height:1.6}
 .foot-col{min-width:0}
 .foot-col h5{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px}
 .foot-col a,.foot-col span{display:block;font-size:14px;color:rgba(255,255,255,.65);text-decoration:none;margin-bottom:9px;word-break:break-word}
 .foot-col a:hover{color:#fff}
-.eho{display:flex;align-items:flex-start;gap:10px;font-size:11px;color:rgba(255,255,255,.45);max-width:1100px;line-height:1.5;margin:0 auto 18px;text-align:left}
+.eho{display:flex;align-items:flex-start;gap:10px;font-size:11px;color:rgba(255,255,255,.45);max-width:100%;width:100%;line-height:1.5;margin:0 0 18px;text-align:left}
 .eho svg{flex-shrink:0;margin-top:2px}
 .foot-bottom{
   display:flex;
@@ -127,17 +129,18 @@ footer{background:var(--navy-deep);padding:56px 5% 28px;color:rgba(255,255,255,.
   gap:12px 24px;
   flex-wrap:wrap;
   font-size:12px;color:rgba(255,255,255,.35);
-  max-width:1100px;
-  margin:0 auto;
+  max-width:none;
+  width:100%;
+  margin:0;
   align-items:center;
 }
 @media(max-width:900px){
-  .foot-top{grid-template-columns:1fr 1fr;gap:28px 24px}
+  .foot-top{grid-template-columns:1fr 1fr;gap:32px 40px}
   .foot-brand{grid-column:1 / -1;max-width:480px}
 }
 @media(max-width:640px){
   footer{padding:44px 5% 24px}
-  .foot-top{grid-template-columns:1fr;gap:26px;padding-bottom:28px}
+  .foot-top{grid-template-columns:1fr;gap:28px;padding-bottom:28px}
   .foot-brand{max-width:100%}
   .foot-bottom{flex-direction:column;align-items:flex-start;gap:8px}
 }
