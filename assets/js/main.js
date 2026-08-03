@@ -171,13 +171,9 @@ function initTestimonials(){
   }
 
   track.innerHTML = list.map((t, i) => {
-    const propertyHtml = t.link
-      ? '<a href="' + escapeHtml(t.link) + '" target="_blank" rel="noopener">' + escapeHtml(t.property) + '</a>'
-      : escapeHtml(t.property);
     const long = t.quote.length > COLLAPSE_LEN;
     return '<article class="t-card">' +
       '<div class="t-reviewer">' + escapeHtml(t.name) + '</div>' +
-      '<h3 class="t-property">' + propertyHtml + '</h3>' +
       '<div class="t-quote-wrap">' +
         '<p class="t-quote' + (long ? ' is-collapsed' : '') + '" id="t-quote-' + i + '">“' + escapeHtml(t.quote) + '”</p>' +
         (long ? '<button type="button" class="t-more" data-i="' + i + '" aria-expanded="false">Read more</button>' : '') +
@@ -345,7 +341,29 @@ function initTestimonials(){
 document.addEventListener("DOMContentLoaded", function(){
   initTestimonials();
   initPhoneMenu();
+  initFaq();
 });
+
+function initFaq(){
+  const list = document.querySelector(".faq-list");
+  if (!list) return;
+  list.addEventListener("click", function(e){
+    const btn = e.target.closest(".faq-q");
+    if (!btn) return;
+    const item = btn.closest(".faq-item");
+    if (!item) return;
+    const open = item.classList.contains("is-open");
+    list.querySelectorAll(".faq-item.is-open").forEach(function(el){
+      el.classList.remove("is-open");
+      const b = el.querySelector(".faq-q");
+      if (b) b.setAttribute("aria-expanded", "false");
+    });
+    if (!open){
+      item.classList.add("is-open");
+      btn.setAttribute("aria-expanded", "true");
+    }
+  });
+}
 
 function initPhoneMenu(){
   const wrap = document.querySelector(".nav-phone");
