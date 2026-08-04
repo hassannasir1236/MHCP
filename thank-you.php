@@ -17,5 +17,4 @@ require __DIR__ . '/includes/header.php';
     <p style="margin-top:30px"><a href="index.php#homes" style="color:var(--sky);font-weight:600">&larr; Keep browsing available homes</a></p>
   </div>
 </section>
-
 <?php require __DIR__ . '/includes/footer.php'; ?>
