@@ -1,6 +1,6 @@
 <?php
 // MHP Communities lead handler - posts form to email, redirects to thank-you page.
-if ($_SERVER["REQUEST_METHOD"] != "POST") { header("Location: index.php"); exit; }
+if ($_SERVER["REQUEST_METHOD"] != "POST") { header("Location: index.html"); exit; }
 
 $name    = str_replace(array("\r","\n"), " ", strip_tags(trim($_POST["name"] ?? "")));
 $phone   = str_replace(array("\r","\n"), " ", strip_tags(trim($_POST["phone"] ?? "")));
@@ -34,6 +34,6 @@ if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 @mail($recipients, $subject, $body, $headers);
 
 // Redirect to thank-you page (fires the Meta Pixel Lead event)
-header("Location: thank-you.php");
+header("Location: thank-you.html");
 exit;
 ?>

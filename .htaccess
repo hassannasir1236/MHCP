@@ -1,13 +1,13 @@
-DirectoryIndex index.php index.html
+DirectoryIndex index.html index.php
 
-# Keep old .html URLs working by redirecting to .php
+# Redirect old .php page URLs to .html (keep sendlead.php working)
 RewriteEngine On
 
-RewriteRule ^index\.html$ index.php [R=301,L]
-RewriteRule ^about\.html$ about.php [R=301,L]
-RewriteRule ^contact\.html$ contact.php [R=301,L]
-RewriteRule ^communities\.html$ communities.php [R=301,L]
-RewriteRule ^thank-you\.html$ thank-you.php [R=301,L]
-RewriteRule ^communities/sweet-lake\.html$ communities/sweet-lake.php [R=301,L]
-RewriteRule ^communities/sturgis-commons\.html$ communities/sturgis-commons.php [R=301,L]
-RewriteRule ^communities/pine-crest\.html$ communities/pine-crest.php [R=301,L]
+RewriteRule ^index\.php$ index.html [R=301,L]
+RewriteRule ^about\.php$ about.html [R=301,L]
+RewriteRule ^contact\.php$ contact.html [R=301,L]
+RewriteRule ^communities\.php$ communities.html [R=301,L]
+RewriteRule ^thank-you\.php$ thank-you.html [R=301,L]
+RewriteRule ^communities/sweet-lake\.php$ communities/sweet-lake.html [R=301,L]
+RewriteRule ^communities/sturgis-commons\.php$ communities/sturgis-commons.html [R=301,L]
+RewriteRule ^communities/pine-crest\.php$ communities/pine-crest.html [R=301,L]
