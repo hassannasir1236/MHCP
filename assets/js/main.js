@@ -18,7 +18,7 @@ function homeCard(h, parkMeta, root){
       (bb ? '<div class="home-bb">' + bb + '</div>' : '') +
       priceHtml +
       '<p class="home-notes">' + (h.notes || "") + '</p>' +
-      '<a class="btn btn-gold btn-sm" href="' + root + 'communities/' + h.park + '.html#inquire">Ask About This Home</a>' +
+      '<a class="btn btn-gold btn-sm" href="' + root + 'communities/' + h.park + '.php#inquire">Ask About This Home</a>' +
     '</div></div>';
 }
 function renderHomes(elId, parkFilter, root){
@@ -29,7 +29,7 @@ function renderHomes(elId, parkFilter, root){
   // priced homes first
   list.sort((a,b) => (a.comingSoon?1:0) - (b.comingSoon?1:0));
   if (!list.length){
-    el.innerHTML = '<p class="no-homes">No homes listed right now — call us, new homes are added often.</p>';
+    el.innerHTML = '<p class="no-homes">No homes listed right now - call us, new homes are added often.</p>';
     return;
   }
   el.innerHTML = list.map(h => homeCard(h, parks[h.park], root)).join("");
@@ -40,7 +40,7 @@ const TESTIMONIALS = [
     name: "Ana Ramos",
     property: "Sweet Lake",
     stars: 5,
-    quote: "Melissa Wing is a serious hard working devoted woman who cares about Sweet Lake and tenants. Warm hearted, kind, caring. Sweet Lake is very well clean, maintained and organized. Maintenance is always on the go keeping Sweet Lake nice and clean no matter the weather or storm! Sweet Lake is a nice, calm, quiet place — tenants are very respectful. If you’re looking to become a first-time homeowner and start small with children, I highly truly recommend Sweet Lake!!",
+    quote: "Melissa Wing is a serious hard working devoted woman who cares about Sweet Lake and tenants. Warm hearted, kind, caring. Sweet Lake is very well clean, maintained and organized. Maintenance is always on the go keeping Sweet Lake nice and clean no matter the weather or storm! Sweet Lake is a nice, calm, quiet place - tenants are very respectful. If you’re looking to become a first-time homeowner and start small with children, I highly truly recommend Sweet Lake!!",
     link: "https://maps.app.goo.gl/B4YZAawLqGGLiLDZA"
   },
   {
@@ -61,7 +61,7 @@ const TESTIMONIALS = [
     name: "Abby Benac",
     property: "Sweet Lake",
     stars: 5,
-    quote: "Melissa is great on helping you get into your new home fast. I definitely recommend people looking for a new home that are not bad on prices and clean places — these are it.",
+    quote: "Melissa is great on helping you get into your new home fast. I definitely recommend people looking for a new home that are not bad on prices and clean places - these are it.",
     link: "https://maps.app.goo.gl/WijiWD5qHzLCEbaT8"
   },
   {
@@ -70,13 +70,6 @@ const TESTIMONIALS = [
     stars: 5,
     quote: "Love my home here.",
     link: "https://maps.app.goo.gl/qoywqeRunkYdLaNs5"
-  },
-  {
-    name: "Amy Jent",
-    property: "Sturgis Commons",
-    stars: 4,
-    quote: "It’s come a loooong ways from back in the day. Parking sucks, not enough room, the drive back has huge chuck holes. But no more bugs. People seem nice.",
-    link: "https://maps.app.goo.gl/kgn3ZVUya24DVQUFA"
   },
   {
     name: "Cindy Voelzke",
@@ -96,7 +89,7 @@ const TESTIMONIALS = [
     name: "Macey Westerhoff",
     property: "Pine Crest",
     stars: 5,
-    quote: "Just bought our home here at Pine Crest! The process was super quick, thanks to Melissa and 21st. Melissa is great!! She is super friendly, responds to my questions right away, and is very proficient at what she does!! So far we’re loving it here — a nice, quiet neighborhood. If you’re looking for a home/community to start or raise your family in, this is the one!!!",
+    quote: "Just bought our home here at Pine Crest! The process was super quick, thanks to Melissa and 21st. Melissa is great!! She is super friendly, responds to my questions right away, and is very proficient at what she does!! So far we’re loving it here - a nice, quiet neighborhood. If you’re looking for a home/community to start or raise your family in, this is the one!!!",
     link: "https://maps.app.goo.gl/wDvptHyJojyK9aW38"
   },
   {
@@ -342,7 +335,71 @@ document.addEventListener("DOMContentLoaded", function(){
   initTestimonials();
   initPhoneMenu();
   initFaq();
+  initMobileNav();
 });
+
+function initMobileNav(){
+  const header = document.querySelector("header");
+  const toggle = document.querySelector(".nav-toggle");
+  const panel = document.querySelector(".header-panel");
+  if (!header || !toggle || !panel) return;
+
+  function closeMenu(){
+    header.classList.remove("is-menu-open");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open menu");
+    document.querySelectorAll(".nav-drop.is-open").forEach(function(el){
+      el.classList.remove("is-open");
+    });
+  }
+
+  function openMenu(){
+    header.classList.add("is-menu-open");
+    toggle.setAttribute("aria-expanded", "true");
+    toggle.setAttribute("aria-label", "Close menu");
+  }
+
+  toggle.addEventListener("click", function(e){
+    e.stopPropagation();
+    if (header.classList.contains("is-menu-open")) closeMenu();
+    else openMenu();
+  });
+
+  // Communities accordion on mobile
+  panel.querySelectorAll(".nav-drop-toggle").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      if (window.innerWidth > 900) return;
+      e.preventDefault();
+      const drop = btn.closest(".nav-drop");
+      if (!drop) return;
+      const open = drop.classList.contains("is-open");
+      panel.querySelectorAll(".nav-drop.is-open").forEach(function(el){
+        el.classList.remove("is-open");
+      });
+      if (!open) drop.classList.add("is-open");
+    });
+  });
+
+  panel.querySelectorAll("a").forEach(function(link){
+    link.addEventListener("click", function(){
+      if (window.innerWidth <= 900 && !link.classList.contains("nav-drop-toggle")){
+        closeMenu();
+      }
+    });
+  });
+
+  document.addEventListener("click", function(e){
+    if (!header.contains(e.target)) closeMenu();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeMenu();
+  });
+
+  window.addEventListener("resize", function(){
+    if (window.innerWidth > 900) closeMenu();
+  });
+}
 
 function initFaq(){
   const list = document.querySelector(".faq-list");
@@ -369,12 +426,18 @@ function initPhoneMenu(){
   const wrap = document.querySelector(".nav-phone");
   if (!wrap) return;
   const btn = wrap.querySelector(".nav-phone-btn");
-  if (!btn) return;
+  const menu = wrap.querySelector(".nav-phone-menu");
+  if (!btn || !menu) return;
 
   btn.addEventListener("click", function(e){
+    e.preventDefault();
     e.stopPropagation();
     const open = wrap.classList.toggle("is-open");
     btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  menu.addEventListener("click", function(e){
+    e.stopPropagation();
   });
 
   document.addEventListener("click", function(e){

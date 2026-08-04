@@ -1,5 +1,5 @@
 // ============================================================
-// TRACKING — EDIT THE TWO IDs BELOW, NOTHING ELSE
+// TRACKING - EDIT THE TWO IDs BELOW, NOTHING ELSE
 // ============================================================
 const META_PIXEL_ID = "PASTE_PIXEL_ID_HERE";   // from Meta Events Manager
 const GA4_ID = "PASTE_GA4_ID_HERE";            // e.g. "G-XXXXXXXXXX" (optional)
