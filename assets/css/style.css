@@ -113,8 +113,11 @@ header.is-menu-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rot
 }
 .hero-inner{max-width:780px;width:100%;margin:0 auto;position:relative;z-index:2}
 .hero .eyebrow{color:var(--gold);margin-bottom:18px}
-.hero h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(32px,5vw,52px);line-height:1.15;margin-bottom:20px;letter-spacing:-.02em}
+.hero h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(28px,4.2vw,46px);line-height:1.2;margin-bottom:16px;letter-spacing:-.02em}
 .hero h1 em{font-style:italic;font-weight:500;color:var(--sky)}
+.hero-or{margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.hero-alt-headline{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,3.6vw,38px);line-height:1.2;margin:0 0 22px;color:#fff;letter-spacing:-.02em}
+.hero-alt-headline em{font-style:italic;font-weight:500;color:var(--sky)}
 .hero .sub{font-size:clamp(15px,2.2vw,17px);line-height:1.65;color:rgba(255,255,255,.85);max-width:680px;margin:0 auto 20px}
 .hero .sub.hero-punch{margin-top:0;margin-bottom:20px;font-weight:700;color:rgba(255,255,255,.85)}
 .hero .sub.hero-sub-note{margin-top:0;margin-bottom:34px;font-size:clamp(14px,2vw,16px);color:rgba(255,255,255,.78)}
@@ -155,6 +158,8 @@ header.is-menu-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rot
 .home-card-soon .card-body h3{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--ink);margin-bottom:4px}
 .home-financing{font-size:12px;font-weight:600;color:var(--navy);line-height:1.5;margin:0 0 12px}
 .homes-notice{grid-column:1 / -1;text-align:center;font-size:14px;font-weight:600;color:var(--sky);margin:8px 0 0;padding-top:8px}
+.cta-band .cta-followup{max-width:720px;margin:28px auto 24px;font-size:15px;line-height:1.7;color:var(--body)}
+.cta-row-bottom{margin-bottom:0}
 .card .btn{align-self:flex-start;margin-top:6px}
 .card-link{font-size:13px;font-weight:600;color:var(--sky);text-decoration:none}
 .card-link:hover{color:var(--navy)}
@@ -167,9 +172,7 @@ header.is-menu-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rot
 .cta-band{background:var(--sky-light);border-top:2px solid var(--sky);padding:64px 5%;text-align:center}
 .cta-band h2{font-family:'Playfair Display',serif;font-size:32px;color:var(--ink);margin-bottom:12px;font-weight:700}
 .cta-band p{font-size:15px;color:var(--muted);margin-bottom:28px}
-.cta-band .cta-followup{max-width:720px;margin:28px auto 24px;font-size:15px;line-height:1.7;color:var(--body)}
 .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.cta-row-bottom{margin-bottom:0}
 footer{background:var(--navy-deep);padding:56px 5% 28px;color:rgba(255,255,255,.65)}
 .foot-top{
   display:grid;
