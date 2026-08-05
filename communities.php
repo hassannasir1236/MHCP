@@ -5,7 +5,10 @@ $pageDescription = 'Three well-kept manufactured home communities in Sturgis and
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="hero hero-page">
+<section class="hero hero-page hero-video-bg">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/img/hero.jpg" aria-hidden="true">
+    <source src="assets/videos/Pine-Crest.mp4" type="video/mp4">
+  </video>
   <div class="hero-inner">
     <div class="eyebrow">Where we operate</div>
     <h1>Three communities. <em>One standard.</em></h1>

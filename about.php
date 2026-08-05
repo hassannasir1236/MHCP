@@ -4,7 +4,10 @@ $pageTitle = 'About Us | MHP Communities - Southwest Michigan';
 $pageDescription = 'We own and operate three manufactured home communities in southwest Michigan, and we put more back into them than most operators our size.';
 require __DIR__ . '/includes/header.php';
 ?>
-<section class="hero hero-page">
+<section class="hero hero-page hero-video-bg">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/img/hero.jpg" aria-hidden="true">
+    <source src="assets/videos/Pine-Crest.mp4" type="video/mp4">
+  </video>
   <div class="hero-inner">
     <div class="eyebrow">Who we are</div>
     <h1>Communities we're <em>proud to run.</em></h1>
@@ -40,8 +43,9 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 <div class="cta-band">
-  <h2>Come take a look for yourself</h2>
-  <p>The parks speak for themselves. Call us or send a note and we'll set up a visit.</p>
+  <h2>Ready to Take a Look?</h2>
+  <p>Whether you're buying your first home or simply looking for a more affordable option, we're here to answer your questions and help you find the right fit.</p>
+  <p>No pressure. Just honest answers and available homes.</p>
   <div class="cta-row">
     <a class="btn btn-gold" href="contact.php">Contact Us</a>
     <a class="btn btn-navy" href="index.php#homes">View Available Homes</a>

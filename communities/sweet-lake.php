@@ -4,7 +4,10 @@ $pageTitle = 'Sweet Lake - Homes for Sale in Sturgis, MI | MHP Communities';
 $pageDescription = 'Manufactured homes for sale at Sweet Lake in Sturgis, Michigan. A quiet, wooded community with lake views on the edge of Sturgis - peaceful surroundings with shops, dining, and everyday essentials just minutes away.';
 require __DIR__ . '/../includes/header.php';
 ?>
-<section class="hero park-hero" style="--hero-img:url('../assets/img/sweet-lake.jpg')">
+<section class="hero park-hero hero-video-bg">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="../assets/img/sweet-lake.jpg" aria-hidden="true">
+    <source src="../assets/videos/sweet_lake.mp4" type="video/mp4">
+  </video>
   <div class="hero-inner">
     <div class="eyebrow">Sturgis, Michigan</div>
     <h1>Sweet Lake</h1>

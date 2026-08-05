@@ -4,7 +4,10 @@ $pageTitle = 'Pine Crest - Homes for Sale in Plainwell, MI | MHP Communities';
 $pageDescription = 'Manufactured homes for sale at Pine Crest in Plainwell, Michigan. A clean, quiet community in Plainwell - minutes from Kalamazoo with easy highway access to Grand Rapids and beyond.';
 require __DIR__ . '/../includes/header.php';
 ?>
-<section class="hero park-hero" style="--hero-img:url('../assets/img/pine-crest.jpg')">
+<section class="hero park-hero hero-video-bg">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="../assets/img/pine-crest.jpg" aria-hidden="true">
+    <source src="../assets/videos/pine_crest.mp4" type="video/mp4">
+  </video>
   <div class="hero-inner">
     <div class="eyebrow">Plainwell, Michigan</div>
     <h1>Pine Crest</h1>

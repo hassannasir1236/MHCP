@@ -4,7 +4,10 @@ $pageTitle = 'Sturgis Commons - Homes for Sale in Sturgis, MI | MHP Communities'
 $pageDescription = 'Manufactured homes for sale at Sturgis Commons in Sturgis, Michigan. A small community in the heart of downtown Sturgis - steps from shops, restaurants, parks, and everything downtown has to offer.';
 require __DIR__ . '/../includes/header.php';
 ?>
-<section class="hero park-hero" style="--hero-img:url('../assets/img/sturgis-commons.jpg')">
+<section class="hero park-hero hero-video-bg">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="../assets/img/sturgis-commons.jpg" aria-hidden="true">
+    <source src="../assets/videos/sturgis.mp4" type="video/mp4">
+  </video>
   <div class="hero-inner">
     <div class="eyebrow">Sturgis, Michigan</div>
     <h1>Sturgis Commons</h1>
