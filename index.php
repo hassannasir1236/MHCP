@@ -11,7 +11,8 @@ require __DIR__ . '/includes/header.php';
   <div class="hero-inner">
     <div class="eyebrow">Southwest Michigan &middot; 3 Communities</div>
     <h1>You could own a home. <em>For less than your rent.</em></h1>
-    <p class="sub">Homes in Sturgis sell for around $190,000. A 3-bedroom apartment there runs $1,337 a month. Our homes start at $15,000 cash, and the second you're done paying, it's yours. No landlord. No lease renewals. No rent increases.</p>
+    <p class="sub">Homes in Sturgis sell for around $190,000. A 3-bedroom apartment there runs $1,337 a month. Our homes start at $15,000 cash, and the second you're done paying, it's yours.</p>
+    <p class="sub hero-punch">No landlord. No lease renewals. No rent increases.</p>
     <p class="sub hero-sub-note">Financing is available too, through established third-party lenders.</p>
     <div class="hero-ctas">
       <a class="btn btn-gold" href="#homes">View Available Homes</a>
@@ -22,7 +23,7 @@ require __DIR__ . '/includes/header.php';
 <div class="stat-bar">
   <div class="stat-item"><strong>$15,000</strong><span>That's our lowest-priced home.<br>Not a teaser - a move-in ready home in downtown Sturgis.</span></div>
   <div class="stat-item"><strong>$1,337/mo</strong><span>Average 3-bed apartment rent in Sturgis right now.<br>Some of our homes cost less than 12 months of that.</span></div>
-  <div class="stat-item"><strong>Min $515/mo lot rent</strong><span>That's your monthly after you own the home.<br>Water, gas, electric separate, garbage included.</span></div>
+  <div class="stat-item"><strong>Lot Rent from $515/month</strong><span>Homesite lease &middot; Utilities separate &middot; Garbage included</span></div>
   <div class="stat-item"><strong>3 communities</strong><span>Sweet Lake &middot; Sturgis Commons &middot; Pine Crest.<br>All-age, pet-friendly, well-kept.</span></div>
 </div>
 <section class="section" id="homes">
@@ -84,15 +85,10 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 <div class="cta-band">
-  <h2>Ready to see a home in person?</h2>
-  <p>Call, text, or send us a note, no pressure, no scripts, just a straight conversation about what's available.</p>
+  <h2>Most people who reach out were renting for years before they realised they could afford this.</h2>
+  <p>If there's any chance a $15,000-$25,000 home fits your life, even if you have questions, even if your credit isn't perfect, just call or text. We answer questions and show you what's available. That's it.</p>
   <div class="cta-row">
-    <a class="btn btn-gold" href="contact.php">Contact Us</a>
     <a class="btn btn-navy" href="tel:+12696518149">Call (269) 651-8149</a>
-  </div>
-  <p class="cta-followup">Most people who reach out were renting for years before they realised they could afford this. If there's any chance a $15,000-$25,000 home fits your life, even if you have questions, even if your credit isn't perfect, just call or text. We answer questions and show you what's available. That's it.</p>
-  <div class="cta-row cta-row-bottom">
-    <a class="btn btn-navy" href="tel:+12696518149">(269) 651-8149</a>
     <a class="btn btn-gold" href="contact.php">Contact Us</a>
   </div>
 </div>

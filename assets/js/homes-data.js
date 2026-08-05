@@ -49,14 +49,13 @@ const HOMES = [
   {
     park: "sweet-lake",
     lot: "Lot 13",
-    title: "1985 Schult",
-    specLine: "Sweet Lake · Sturgis, MI",
+    title: "1985 Schult - 14x70",
     beds: 3, baths: 2,
     price: null,
     available: true,
     comingSoon: true,
     photos: [],
-    notes: "Coming soon; inquire for details."
+    notes: "Coming soon - inquire for details."
   },
   {
     park: "sweet-lake",
@@ -64,7 +63,7 @@ const HOMES = [
     title: "1995 Mansion - 16x76",
     beds: null, baths: null,
     price: null,
-    available: false,
+    available: true,
     comingSoon: true,
     photos: [],
     notes: "Coming soon - inquire for details."
@@ -75,7 +74,7 @@ const HOMES = [
     title: "1984 Redman - Double Wide",
     beds: 3, baths: 2,
     price: null,
-    available: false,
+    available: true,
     comingSoon: true,
     photos: [],
     notes: "Coming soon - inquire for details."
@@ -86,7 +85,7 @@ const HOMES = [
     title: "1993 Redman - 16x76",
     beds: 3, baths: 2,
     price: null,
-    available: false,
+    available: true,
     comingSoon: true,
     photos: [],
     notes: "Coming soon - inquire for details."
