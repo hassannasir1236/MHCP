@@ -4,20 +4,22 @@ function homeCard(h, parkMeta, root){
   const img = (h.photos && h.photos.length)
     ? root + "assets/img/homes/" + h.photos[0]
     : root + "assets/img/" + parkMeta.img;
-  const priceHtml = h.comingSoon || h.price == null
-    ? '<div class="home-price soon">Coming Soon &middot; Inquire</div>'
-    : '<div class="home-price">' + money(h.price) + ' <small>cash price &middot; lot rent separate</small></div>';
-  const bb = (h.beds ? h.beds + " bed" : "") + (h.beds && h.baths ? " &middot; " : "") + (h.baths ? h.baths + " bath" : "");
+  const bb = (h.beds ? h.beds + " bed" : "") + (h.beds && h.baths ? " · " : "") + (h.baths ? h.baths + " bath" : "");
   const badge = h.comingSoon ? "Coming Soon" : "For Sale";
-  return '<div class="card home-card">' +
+  const specLine = h.specLine || h.title;
+  const headerHtml = h.comingSoon
+    ? '<div class="home-card-header"><div class="home-status-label">Coming Soon</div><h3>' + h.title + '</h3><div class="home-spec">' + specLine + (bb ? '<br>' + bb : '') + '</div></div>'
+    : '<div class="home-card-header"><div class="home-card-price-row"><span class="home-community">' + parkMeta.name + '</span><strong>' + money(h.price) + '</strong></div><div class="home-spec">' + specLine + '</div></div>';
+  const financingHtml = h.financingNote
+    ? '<p class="home-financing">' + h.financingNote + '</p>'
+    : '';
+  return '<div class="card home-card' + (h.comingSoon ? ' home-card-soon' : '') + '">' +
     '<div class="card-photo" style="background-image:url(\'' + img + '\')">' +
       '<div class="card-badge' + (h.comingSoon ? ' badge-soon' : '') + '">' + badge + '</div></div>' +
     '<div class="card-body">' +
-      '<div class="card-location">' + parkMeta.name + ' &middot; ' + parkMeta.city + ', MI</div>' +
-      '<h3>' + h.title + '</h3>' +
-      (bb ? '<div class="home-bb">' + bb + '</div>' : '') +
-      priceHtml +
+      headerHtml +
       '<p class="home-notes">' + (h.notes || "") + '</p>' +
+      financingHtml +
       '<a class="btn btn-gold btn-sm" href="' + root + 'communities/' + h.park + '.html#inquire">Ask About This Home</a>' +
     '</div></div>';
 }
@@ -26,13 +28,14 @@ function renderHomes(elId, parkFilter, root){
   if (!el || typeof HOMES === "undefined") return;
   const parks = window.PARKS_META;
   let list = HOMES.filter(h => h.available && (!parkFilter || h.park === parkFilter));
-  // priced homes first
-  list.sort((a,b) => (a.comingSoon?1:0) - (b.comingSoon?1:0));
+  list.sort((a,b) => (a.comingSoon?1:0) - (b.comingSoon?1:0) || (a.price||0) - (b.price||0));
   if (!list.length){
     el.innerHTML = '<p class="no-homes">No homes listed right now - call us, new homes are added often.</p>';
     return;
   }
-  el.innerHTML = list.map(h => homeCard(h, parks[h.park], root)).join("");
+  const hasComingSoon = list.some(h => h.comingSoon);
+  el.innerHTML = list.map(h => homeCard(h, parks[h.park], root)).join("") +
+    (hasComingSoon && !parkFilter ? '<p class="homes-notice">Get First Notice on These Homes</p>' : '');
 }
 
 const TESTIMONIALS = [
