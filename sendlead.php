@@ -1,5 +1,5 @@
 <?php
-// MHP Communities lead handler — sends via SMTP (same as Roundcube), then thank-you page.
+// MHP Communities lead handler — SMTP only (same auth as Roundcube).
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     header('Location: ./');
     exit;
@@ -22,7 +22,7 @@ if ($name === '' || $phone === '') {
 $config = mhp_load_mail_config();
 if ($config === null) {
     http_response_code(500);
-    echo 'Email is not configured yet. Copy includes/mail-config.example.php to includes/mail-config.php and set the mailbox password.';
+    echo 'Email is not configured yet. Upload includes/mail-config.php with your mailbox password.';
     exit;
 }
 
@@ -43,20 +43,17 @@ $body .= "Message:\n" . ($message ?: '(none)') . "\n\n";
 $body .= "Follow-up SLA: call or text back the same business day.\n";
 
 $replyTo = ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) ? $email : '';
-$sent = mhp_smtp_send($config, $recipients, $subject, $body, $replyTo);
-
-if (!$sent) {
-    // Last-resort fallback (often blocked on shared hosting)
-    $headers = 'From: ' . ($config['from_email'] ?? 'leads@mhpcommunities.com') . "\r\n";
-    if ($replyTo) {
-        $headers .= "Reply-To: $replyTo\r\n";
-    }
-    $sent = @mail($recipients, $subject, $body, $headers);
-}
+$smtpError = null;
+$sent = mhp_smtp_send($config, $recipients, $subject, $body, $replyTo, $smtpError);
 
 if (!$sent) {
     http_response_code(500);
-    echo 'Sorry — we could not send your message right now. Please call (269) 651-8149 or try again shortly.';
+    echo '<h2>Email could not be sent</h2>';
+    echo '<p>Please call <a href="tel:+12696518149">(269) 651-8149</a> or try again shortly.</p>';
+    if (!empty($config['debug'])) {
+        echo '<p><strong>Debug:</strong> ' . htmlspecialchars((string) $smtpError, ENT_QUOTES, 'UTF-8') . '</p>';
+        echo '<p>Check: mailbox exists, password matches Roundcube login, host is <code>server363.web-hosting.com</code>, username is full email.</p>';
+    }
     exit;
 }
 

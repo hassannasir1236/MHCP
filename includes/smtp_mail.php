@@ -13,8 +13,9 @@ function mhp_load_mail_config()
     return is_array($config) ? $config : null;
 }
 
-function mhp_smtp_send(array $config, $to, $subject, $body, $replyTo = '')
+function mhp_smtp_send(array $config, $to, $subject, $body, $replyTo = '', &$error = null)
 {
+    $error = null;
     $host = $config['host'] ?? '';
     $port = (int) ($config['port'] ?? 465);
     $encryption = strtolower((string) ($config['encryption'] ?? 'ssl'));
@@ -24,47 +25,33 @@ function mhp_smtp_send(array $config, $to, $subject, $body, $replyTo = '')
     $fromName = $config['from_name'] ?? 'Website';
 
     if ($host === '' || $username === '' || $password === '' || $password === 'CHANGE_ME_TO_MAILBOX_PASSWORD') {
+        $error = 'Mailbox password is not set in includes/mail-config.php';
         return false;
     }
 
     $remote = ($encryption === 'ssl' ? 'ssl://' : '') . $host;
     $errno = 0;
     $errstr = '';
+    $context = stream_context_create([
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+        ],
+    ]);
+
     $fp = @stream_socket_client(
         $remote . ':' . $port,
         $errno,
         $errstr,
         30,
         STREAM_CLIENT_CONNECT,
-        stream_context_create([
-            'ssl' => [
-                'verify_peer' => true,
-                'verify_peer_name' => true,
-                'allow_self_signed' => false,
-            ],
-        ])
+        $context
     );
 
     if (!$fp) {
-        // Retry without strict SSL verify (some shared hosts use mismatched cert CN)
-        $fp = @stream_socket_client(
-            $remote . ':' . $port,
-            $errno,
-            $errstr,
-            30,
-            STREAM_CLIENT_CONNECT,
-            stream_context_create([
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
-                ],
-            ])
-        );
-    }
-
-    if (!$fp) {
-        error_log("MHP SMTP connect failed: $errstr ($errno)");
+        $error = "Cannot connect to SMTP $host:$port — $errstr ($errno)";
+        error_log('MHP SMTP connect failed: ' . $error);
         return false;
     }
 
@@ -128,16 +115,16 @@ function mhp_smtp_send(array $config, $to, $subject, $body, $replyTo = '')
         }
         $write(base64_encode($username));
         if (!$expect($read(), 334)) {
-            throw new RuntimeException('SMTP username rejected');
+            throw new RuntimeException('SMTP username rejected — check username in mail-config.php');
         }
         $write(base64_encode($password));
         if (!$expect($read(), 235)) {
-            throw new RuntimeException('SMTP password rejected');
+            throw new RuntimeException('SMTP password rejected — wrong mailbox password for ' . $username);
         }
 
         $write('MAIL FROM:<' . $fromEmail . '>');
         if (!$expect($read(), 250)) {
-            throw new RuntimeException('MAIL FROM rejected');
+            throw new RuntimeException('MAIL FROM rejected for ' . $fromEmail);
         }
 
         $toList = array_filter(array_map('trim', explode(',', $to)));
@@ -167,21 +154,21 @@ function mhp_smtp_send(array $config, $to, $subject, $body, $replyTo = '')
             $headers[] = 'Reply-To: ' . $replyTo;
         }
 
-        // Dot-stuff body lines that start with .
         $safeBody = preg_replace('/^\./m', '..', str_replace(["\r\n", "\r"], "\n", $body));
         $safeBody = str_replace("\n", "\r\n", $safeBody);
 
         $message = implode("\r\n", $headers) . "\r\n\r\n" . $safeBody . "\r\n.";
         $write($message);
         if (!$expect($read(), 250)) {
-            throw new RuntimeException('Message not accepted');
+            throw new RuntimeException('Message not accepted by mail server');
         }
 
         $write('QUIT');
         fclose($fp);
         return true;
     } catch (Throwable $e) {
-        error_log('MHP SMTP send failed: ' . $e->getMessage());
+        $error = $e->getMessage();
+        error_log('MHP SMTP send failed: ' . $error);
         fclose($fp);
         return false;
     }
