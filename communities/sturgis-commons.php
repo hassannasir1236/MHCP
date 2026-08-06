@@ -45,7 +45,7 @@ require __DIR__ . '/../includes/header.php';
 <div class="form-wrap" id="inquire">
   <h3>Ask About a Home</h3>
   <p class="form-sub">Tell us what you're looking for - we'll call or text you back the same business day.</p>
-  <form action="../sendlead.php" method="post">
+  <form action="../sendlead" method="post">
     <div class="field"><label for="f-name">Name *</label><input id="f-name" name="name" type="text" required></div>
     <div class="field"><label for="f-phone">Phone *</label><input id="f-phone" name="phone" type="tel" required placeholder="(555) 555-5555"></div>
     <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email"></div>

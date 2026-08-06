@@ -47,8 +47,8 @@ require __DIR__ . '/includes/header.php';
   <p>Whether you're buying your first home or simply looking for a more affordable option, we're here to answer your questions and help you find the right fit.</p>
   <p>No pressure. Just honest answers and available homes.</p>
   <div class="cta-row">
-    <a class="btn btn-gold" href="contact.php">Contact Us</a>
-    <a class="btn btn-navy" href="index.php#homes">View Available Homes</a>
+    <a class="btn btn-gold" href="contact">Contact Us</a>
+    <a class="btn btn-navy" href="./#homes">View Available Homes</a>
   </div>
 </div>
 

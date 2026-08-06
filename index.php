@@ -16,7 +16,7 @@ require __DIR__ . '/includes/header.php';
     <p class="sub hero-sub-note">Financing is available too, through established third-party lenders.</p>
     <div class="hero-ctas">
       <a class="btn btn-gold" href="#homes">View Available Homes</a>
-      <a class="btn btn-ghost" href="communities.php">See Our Communities</a>
+      <a class="btn btn-ghost" href="communities">See Our Communities</a>
     </div>
   </div>
 </section>
@@ -47,7 +47,7 @@ require __DIR__ . '/includes/header.php';
         <div class="card-location">Sturgis, Michigan</div>
         <h3>Sweet Lake</h3>
         <p class="home-notes">A quiet, wooded community with lake views on the edge of Sturgis - peaceful surroundings with shops, dining, and everyday essentials just minutes away.</p>
-        <a class="btn btn-navy btn-sm" href="communities/sweet-lake.php">See This Community</a>
+        <a class="btn btn-navy btn-sm" href="communities/sweet-lake">See This Community</a>
       </div>
     </div>
     <div class="card">
@@ -56,7 +56,7 @@ require __DIR__ . '/includes/header.php';
         <div class="card-location">Sturgis, Michigan</div>
         <h3>Sturgis Commons</h3>
         <p class="home-notes">A small community in the heart of downtown Sturgis - steps from shops, restaurants, parks, and everything downtown has to offer.</p>
-        <a class="btn btn-navy btn-sm" href="communities/sturgis-commons.php">See This Community</a>
+        <a class="btn btn-navy btn-sm" href="communities/sturgis-commons">See This Community</a>
       </div>
     </div>
     <div class="card">
@@ -65,7 +65,7 @@ require __DIR__ . '/includes/header.php';
         <div class="card-location">Plainwell, Michigan</div>
         <h3>Pine Crest</h3>
         <p class="home-notes">A clean, quiet community in Plainwell - minutes from Kalamazoo with easy highway access to Grand Rapids and beyond.</p>
-        <a class="btn btn-navy btn-sm" href="communities/pine-crest.php">See This Community</a>
+        <a class="btn btn-navy btn-sm" href="communities/pine-crest">See This Community</a>
       </div>
     </div>
   </div>
@@ -89,7 +89,7 @@ require __DIR__ . '/includes/header.php';
   <p>We're here to answer your questions and help you explore what's available.</p>
   <div class="cta-row">
     <a class="btn btn-navy" href="tel:+12696518149">Call (269) 651-8149</a>
-    <a class="btn btn-gold" href="contact.php">Contact Us</a>
+    <a class="btn btn-gold" href="contact">Contact Us</a>
   </div>
 </div>
 

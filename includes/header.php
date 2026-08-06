@@ -19,23 +19,23 @@ if (!isset($bodyAttrs)) { $bodyAttrs = ''; }
 <body<?php echo $bodyAttrs ? ' ' . $bodyAttrs : ''; ?>>
 
 <header>
-  <a class="logo" href="<?php echo $base; ?>index.php"><img src="<?php echo $base; ?>assets/img/logo.png" alt="MHP Communities"><span class="logo-text">MHP Communities</span></a>
+  <a class="logo" href="<?php echo $base; ?>"><img src="<?php echo $base; ?>assets/img/logo.png" alt="MHP Communities"><span class="logo-text">MHP Communities</span></a>
   <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
   <div class="header-panel">
   <nav>
-    <a href="<?php echo $base; ?>index.php#homes">Home</a>
+    <a href="<?php echo $base; ?>#homes">Home</a>
     <div class="nav-drop">
-      <a href="<?php echo $base; ?>communities.php" class="nav-drop-toggle">Communities</a>
+      <a href="<?php echo $base; ?>communities" class="nav-drop-toggle">Communities</a>
       <div class="nav-drop-menu">
-        <a href="<?php echo $base; ?>communities/sweet-lake.php">Sweet Lake</a>
-        <a href="<?php echo $base; ?>communities/sturgis-commons.php">Sturgis Commons</a>
-        <a href="<?php echo $base; ?>communities/pine-crest.php">Pine Crest</a>
+        <a href="<?php echo $base; ?>communities/sweet-lake">Sweet Lake</a>
+        <a href="<?php echo $base; ?>communities/sturgis-commons">Sturgis Commons</a>
+        <a href="<?php echo $base; ?>communities/pine-crest">Pine Crest</a>
       </div>
     </div>
-    <a href="<?php echo $base; ?>about.php">About</a>
-    <a href="<?php echo $base; ?>contact.php">Contact</a>
+    <a href="<?php echo $base; ?>about">About</a>
+    <a href="<?php echo $base; ?>contact">Contact</a>
   </nav>
   <div class="header-actions">
     <div class="nav-phone">
@@ -48,7 +48,7 @@ if (!isset($bodyAttrs)) { $bodyAttrs = ''; }
         <a href="tel:+12696806022" role="menuitem"><span>Pine Crest</span><strong>(269) 680-6022</strong></a>
       </div>
     </div>
-    <a class="btn btn-gold btn-sm" href="<?php echo $base; ?>index.php#homes">Available Homes</a>
+    <a class="btn btn-gold btn-sm" href="<?php echo $base; ?>#homes">Available Homes</a>
   </div>
   </div>
 </header>

@@ -14,7 +14,7 @@ require __DIR__ . '/includes/header.php';
       <a class="btn btn-gold" href="tel:+12696518149">Sturgis: (269) 651-8149</a>
       <a class="btn btn-navy" href="tel:+12696806022">Plainwell: (269) 680-6022</a>
     </div>
-    <p style="margin-top:30px"><a href="index.php#homes" style="color:var(--sky);font-weight:600">&larr; Keep browsing available homes</a></p>
+    <p style="margin-top:30px"><a href="./#homes" style="color:var(--sky);font-weight:600">&larr; Keep browsing available homes</a></p>
   </div>
 </section>
 <?php require __DIR__ . '/includes/footer.php'; ?>

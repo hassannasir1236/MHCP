@@ -17,7 +17,7 @@ function homeCard(h, parkMeta, root){
         '<h3>' + h.title + '</h3>' +
         (bb ? '<div class="home-bb">' + bb + '</div>' : '') +
         '<div class="home-price soon">Coming Soon &middot; Inquire</div>' +
-        '<a class="btn btn-gold btn-sm" href="' + root + 'communities/' + h.park + '.php#inquire">Ask About This Home</a>' +
+        '<a class="btn btn-gold btn-sm" href="' + root + 'communities/' + h.park + '#inquire">Ask About This Home</a>' +
       '</div></div>';
   }
 
@@ -32,7 +32,7 @@ function homeCard(h, parkMeta, root){
       '<div class="home-card-header"><div class="home-card-price-row"><span class="home-community">' + parkMeta.name + '</span><strong>' + money(h.price) + '</strong></div><div class="home-spec">' + specLine + '</div></div>' +
       '<p class="home-notes">' + (h.notes || "") + '</p>' +
       financingHtml +
-      '<a class="btn btn-gold btn-sm" href="' + root + 'communities/' + h.park + '.php#inquire">Ask About This Home</a>' +
+      '<a class="btn btn-gold btn-sm" href="' + root + 'communities/' + h.park + '#inquire">Ask About This Home</a>' +
     '</div></div>';
 }
 function renderHomes(elId, parkFilter, root){

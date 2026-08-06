@@ -1,13 +1,26 @@
 DirectoryIndex index.php index.html
 
-# Keep old .html URLs working by redirecting to .php
 RewriteEngine On
 
-RewriteRule ^index\.html$ index.php [R=301,L]
-RewriteRule ^about\.html$ about.php [R=301,L]
-RewriteRule ^contact\.html$ contact.php [R=301,L]
-RewriteRule ^communities\.html$ communities.php [R=301,L]
-RewriteRule ^thank-you\.html$ thank-you.php [R=301,L]
-RewriteRule ^communities/sweet-lake\.html$ communities/sweet-lake.php [R=301,L]
-RewriteRule ^communities/sturgis-commons\.html$ communities/sturgis-commons.php [R=301,L]
-RewriteRule ^communities/pine-crest\.html$ communities/pine-crest.php [R=301,L]
+# Old .html bookmarks → clean URLs
+RewriteRule ^index\.html$ / [R=301,L]
+RewriteRule ^about\.html$ /about [R=301,L]
+RewriteRule ^contact\.html$ /contact [R=301,L]
+RewriteRule ^communities\.html$ /communities [R=301,L]
+RewriteRule ^thank-you\.html$ /thank-you [R=301,L]
+RewriteRule ^communities/sweet-lake\.html$ /communities/sweet-lake [R=301,L]
+RewriteRule ^communities/sturgis-commons\.html$ /communities/sturgis-commons [R=301,L]
+RewriteRule ^communities/pine-crest\.html$ /communities/pine-crest [R=301,L]
+
+# Hide .php in the browser address bar (GET only — keep POST working)
+RewriteCond %{THE_REQUEST} \s/+index\.php[\s?] [NC]
+RewriteRule ^index\.php$ / [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# Serve clean URLs from matching .php files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*?)/?$ $1.php [L]
