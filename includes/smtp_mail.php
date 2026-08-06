@@ -141,15 +141,17 @@ function mhp_smtp_send(array $config, $to, $subject, $body, $replyTo = '', &$err
         }
 
         $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+        $msgId = sprintf('<%s@%s>', bin2hex(random_bytes(12)), 'mhpcommunities.com');
         $headers = [];
         $headers[] = 'Date: ' . date('r');
-        $headers[] = 'From: ' . sprintf('"%s" <%s>', addcslashes($fromName, '"'), $fromEmail);
+        $headers[] = 'From: ' . sprintf('"%s" <%s>', addcslashes($fromName, '"\\'), $fromEmail);
         $headers[] = 'To: ' . implode(', ', $toList);
         $headers[] = 'Subject: ' . $encodedSubject;
+        $headers[] = 'Message-ID: ' . $msgId;
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-Type: text/plain; charset=UTF-8';
         $headers[] = 'Content-Transfer-Encoding: 8bit';
-        $headers[] = 'X-Mailer: MHP-Communities-SMTP';
+        $headers[] = 'X-Priority: 3';
         if ($replyTo && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
             $headers[] = 'Reply-To: ' . $replyTo;
         }
