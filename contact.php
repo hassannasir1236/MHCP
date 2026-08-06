@@ -34,7 +34,7 @@ require __DIR__ . '/includes/header.php';
     <div class="field"><label for="f-park">Which community?</label><select id="f-park" name="park"><option value="">- Choose a community -</option><option value="Sweet Lake">Sweet Lake - Sturgis, MI</option><option value="Sturgis Commons">Sturgis Commons - Sturgis, MI</option><option value="Pine Crest">Pine Crest - Plainwell, MI</option></select></div>
     <div class="field"><label for="f-msg">What are you looking for?</label><textarea id="f-msg" name="message" rows="4" placeholder="e.g. 2-3 bedrooms, move-in by fall, budget around $20k"></textarea></div>
     <button class="btn btn-gold" type="submit">Send - We'll Reach Out</button>
-    <p class="form-note">No pressure, no spam. Just a straight conversation about what's available.</p>
+    <p class="form-note">No pressure. Just a straight conversation about what is available.</p>
   </form>
 </div>
   </div>

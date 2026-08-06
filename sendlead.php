@@ -1,5 +1,5 @@
 <?php
-// MHP Communities lead handler — SMTP only (same auth as Roundcube).
+// MHP Communities lead handler — SMTP to domain mailbox + HTML template.
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     header('Location: ./');
     exit;
@@ -13,9 +13,6 @@ $email   = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
 $park    = str_replace(["\r", "\n"], ' ', strip_tags(trim($_POST['park'] ?? '')));
 $message = strip_tags(trim($_POST['message'] ?? ''));
 
-/**
- * Simple status page so submit always shows sent / not sent + issue text.
- */
 function mhp_lead_status_page($ok, $title, $messageHtml, $detail = '')
 {
     $color = $ok ? '#0a7a3e' : '#b00020';
@@ -82,36 +79,44 @@ if ($recipients === '') {
     );
 }
 
-// Soft wording — host spam filters flag ALL-CAPS subjects like "WEBSITE LEAD"
-$subjectParts = ['Home inquiry'];
+// Ignore UI helper / placeholder text copied into the message box
+$ignoreMessages = [
+    "Tell us what you're looking for - we'll call or text you back the same business day.",
+    'e.g. 2-3 bedrooms, move-in by fall, budget around $20k',
+    "No pressure, no spam. Just a straight conversation about what's available.",
+    'No pressure, no spam. Just a straight conversation about what\'s available.',
+];
+if (in_array($message, $ignoreMessages, true) || stripos($message, 'no spam') !== false) {
+    $message = '';
+}
+
+$visitorMessage = $message !== '' ? $message : 'No message provided.';
+$subjectParts = ['New inquiry'];
 if ($park !== '') {
     $subjectParts[] = $park;
 }
 $subjectParts[] = $name;
-$subject = implode(' - ', $subjectParts);
+$subject = implode(' — ', $subjectParts);
 
-$placeholderHints = [
-    "Tell us what you're looking for - we'll call or text you back the same business day.",
-    "e.g. 2-3 bedrooms, move-in by fall, budget around \$20k",
-];
-if (in_array($message, $placeholderHints, true)) {
-    $message = '';
-}
+$bodyText  = "New inquiry from mhpcommunities.com\n\n";
+$bodyText .= "Name: $name\n";
+$bodyText .= "Phone: $phone\n";
+$bodyText .= 'Email: ' . ($email !== '' ? $email : 'Not provided') . "\n";
+$bodyText .= 'Community: ' . ($park !== '' ? $park : 'Not specified') . "\n\n";
+$bodyText .= "Message:\n$visitorMessage\n";
 
-$body  = "Hello,\n\n";
-$body .= "Someone submitted the contact form on mhpcommunities.com.\n\n";
-$body .= "Name: $name\n";
-$body .= "Phone: $phone\n";
-$body .= 'Email: ' . ($email !== '' ? $email : 'Not provided') . "\n";
-$body .= 'Community: ' . ($park !== '' ? $park : 'Not specified') . "\n\n";
-$body .= "Their message:\n";
-$body .= ($message !== '' ? $message : 'No message provided.') . "\n\n";
-$body .= "Please reply to the visitor if an email address was provided.\n";
-$body .= "— MHP Communities website\n";
+$bodyHtml = mhp_lead_email_html([
+    'name' => $name,
+    'phone' => $phone,
+    'email' => $email !== '' ? $email : 'Not provided',
+    'park' => $park !== '' ? $park : 'Not specified',
+    'message' => $visitorMessage,
+    'when' => date('F j, Y g:i A T'),
+]);
 
 $replyTo = ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) ? $email : '';
 $smtpError = null;
-$sent = mhp_smtp_send($config, $recipients, $subject, $body, $replyTo, $smtpError);
+$sent = mhp_smtp_send($config, $recipients, $subject, $bodyText, $replyTo, $smtpError, $bodyHtml);
 
 if (!$sent) {
     mhp_lead_status_page(
@@ -123,6 +128,5 @@ if (!$sent) {
     );
 }
 
-// Success: go to thank-you page (Meta Pixel Lead event)
 header('Location: thank-you?sent=1');
 exit;
