@@ -1,39 +1,64 @@
 <?php
-// MHP Communities lead handler - posts form to email, redirects to thank-you page.
-if ($_SERVER["REQUEST_METHOD"] != "POST") { header("Location: ./"); exit; }
-
-$name    = str_replace(array("\r","\n"), " ", strip_tags(trim($_POST["name"] ?? "")));
-$phone   = str_replace(array("\r","\n"), " ", strip_tags(trim($_POST["phone"] ?? "")));
-$email   = filter_var(trim($_POST["email"] ?? ""), FILTER_SANITIZE_EMAIL);
-$park    = str_replace(array("\r","\n"), " ", strip_tags(trim($_POST["park"] ?? "")));
-$message = strip_tags(trim($_POST["message"] ?? ""));
-
-if (empty($name) || empty($phone)) {
-    http_response_code(400);
-    echo "Please include your name and phone number, then try again.";
+// MHP Communities lead handler — sends via SMTP (same as Roundcube), then thank-you page.
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    header('Location: ./');
     exit;
 }
 
-// ===== RECIPIENTS - edit here if lead routing changes =====
-$recipients = "Melissa.Wing@sweetlake.net, aqsa.sadiq0@gmail.com";
+require_once __DIR__ . '/includes/smtp_mail.php';
 
-$subject = "WEBSITE LEAD" . ($park ? " - $park" : "") . " - $name";
+$name    = str_replace(["\r", "\n"], ' ', strip_tags(trim($_POST['name'] ?? '')));
+$phone   = str_replace(["\r", "\n"], ' ', strip_tags(trim($_POST['phone'] ?? '')));
+$email   = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+$park    = str_replace(["\r", "\n"], ' ', strip_tags(trim($_POST['park'] ?? '')));
+$message = strip_tags(trim($_POST['message'] ?? ''));
+
+if ($name === '' || $phone === '') {
+    http_response_code(400);
+    echo 'Please include your name and phone number, then try again.';
+    exit;
+}
+
+$config = mhp_load_mail_config();
+if ($config === null) {
+    http_response_code(500);
+    echo 'Email is not configured yet. Copy includes/mail-config.example.php to includes/mail-config.php and set the mailbox password.';
+    exit;
+}
+
+$recipients = $config['recipients'] ?? '';
+if ($recipients === '') {
+    http_response_code(500);
+    echo 'No lead recipients configured.';
+    exit;
+}
+
+$subject = 'WEBSITE LEAD' . ($park ? " - $park" : '') . " - $name";
 $body  = "New lead from mhpcommunities.com\n\n";
 $body .= "Name:      $name\n";
 $body .= "Phone:     $phone\n";
-$body .= "Email:     " . ($email ?: "(not provided)") . "\n";
-$body .= "Community: " . ($park ?: "(not specified)") . "\n\n";
-$body .= "Message:\n" . ($message ?: "(none)") . "\n\n";
+$body .= 'Email:     ' . ($email ?: '(not provided)') . "\n";
+$body .= 'Community: ' . ($park ?: '(not specified)') . "\n\n";
+$body .= "Message:\n" . ($message ?: '(none)') . "\n\n";
 $body .= "Follow-up SLA: call or text back the same business day.\n";
 
-$headers = "From: leads@mhpcommunities.com\r\n";
-if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $headers .= "Reply-To: $email\r\n";
+$replyTo = ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) ? $email : '';
+$sent = mhp_smtp_send($config, $recipients, $subject, $body, $replyTo);
+
+if (!$sent) {
+    // Last-resort fallback (often blocked on shared hosting)
+    $headers = 'From: ' . ($config['from_email'] ?? 'leads@mhpcommunities.com') . "\r\n";
+    if ($replyTo) {
+        $headers .= "Reply-To: $replyTo\r\n";
+    }
+    $sent = @mail($recipients, $subject, $body, $headers);
 }
 
-@mail($recipients, $subject, $body, $headers);
+if (!$sent) {
+    http_response_code(500);
+    echo 'Sorry — we could not send your message right now. Please call (269) 651-8149 or try again shortly.';
+    exit;
+}
 
-// Redirect to thank-you page (fires the Meta Pixel Lead event)
-header("Location: thank-you");
+header('Location: thank-you');
 exit;
-?>
