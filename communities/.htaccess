@@ -1,0 +1,15 @@
+DirectoryIndex index.php index.html
+
+Options -Indexes
+
+RewriteEngine On
+
+# Hide .php extensions inside /communities/
+RewriteCond %{THE_REQUEST} \s/+communities/(.+?)\.php[\s?] [NC]
+RewriteRule ^ /communities/%1 [R=301,L]
+
+# /communities/sweet-lake → sweet-lake.php (etc.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]

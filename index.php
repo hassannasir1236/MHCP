@@ -16,7 +16,7 @@ require __DIR__ . '/includes/header.php';
     <p class="sub hero-sub-note">Financing is available too, through established third-party lenders.</p>
     <div class="hero-ctas">
       <a class="btn btn-gold" href="#homes">View Available Homes</a>
-      <a class="btn btn-ghost" href="communities">See Our Communities</a>
+      <a class="btn btn-ghost" href="communities/">See Our Communities</a>
     </div>
   </div>
 </section>

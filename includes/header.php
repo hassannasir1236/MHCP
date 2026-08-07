@@ -27,7 +27,7 @@ if (!isset($bodyAttrs)) { $bodyAttrs = ''; }
   <nav>
     <a href="<?php echo $base; ?>#homes">Home</a>
     <div class="nav-drop">
-      <a href="<?php echo $base; ?>communities" class="nav-drop-toggle">Communities</a>
+      <a href="<?php echo $base; ?>communities/" class="nav-drop-toggle">Communities</a>
       <div class="nav-drop-menu">
         <a href="<?php echo $base; ?>communities/sweet-lake">Sweet Lake</a>
         <a href="<?php echo $base; ?>communities/sturgis-commons">Sturgis Commons</a>
