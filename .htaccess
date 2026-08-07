@@ -4,6 +4,10 @@ Options -Indexes
 
 RewriteEngine On
 
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 # Old .html bookmarks → clean URLs
 RewriteRule ^index\.html$ / [R=301,L]
 RewriteRule ^about\.html$ /about [R=301,L]
