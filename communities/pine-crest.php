@@ -45,13 +45,13 @@ require __DIR__ . '/../includes/header.php';
 <div class="form-wrap" id="inquire">
   <h3>Ask About a Home</h3>
   <p class="form-sub">Tell us what you're looking for - we'll call or text you back the same business day.</p>
-  <form action="../sendlead" method="post">
-    <div class="field"><label for="f-name">Name *</label><input id="f-name" name="name" type="text" required></div>
-    <div class="field"><label for="f-phone">Phone *</label><input id="f-phone" name="phone" type="tel" required placeholder="(555) 555-5555"></div>
-    <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email"></div>
-    <div class="field"><label for="f-park">Which community?</label><select id="f-park" name="park"><option value="">- Choose a community -</option><option value="Sweet Lake">Sweet Lake - Sturgis, MI</option><option value="Sturgis Commons">Sturgis Commons - Sturgis, MI</option><option value="Pine Crest" selected>Pine Crest - Plainwell, MI</option></select></div>
-    <div class="field"><label for="f-msg">What are you looking for?</label><textarea id="f-msg" name="message" rows="4" placeholder="e.g. 2-3 bedrooms, move-in by fall, budget around $20k"></textarea></div>
-    <button class="btn btn-gold" type="submit">Send - We'll Reach Out</button>
+  <form id="lead-form" name="lead-form" action="../sendlead" method="post">
+    <div class="field"><label for="lead-name">Name *</label><input id="lead-name" name="name" type="text" required autocomplete="name"></div>
+    <div class="field"><label for="lead-phone">Phone *</label><input id="lead-phone" name="phone" type="tel" required placeholder="(555) 555-5555" autocomplete="tel"></div>
+    <div class="field"><label for="lead-email">Email</label><input id="lead-email" name="email" type="email" autocomplete="email"></div>
+    <div class="field"><label for="lead-community">Which community?</label><select id="lead-community" name="park"><option value="">- Choose a community -</option><option value="Sweet Lake">Sweet Lake - Sturgis, MI</option><option value="Sturgis Commons">Sturgis Commons - Sturgis, MI</option><option value="Pine Crest" selected>Pine Crest - Plainwell, MI</option></select></div>
+    <div class="field"><label for="lead-message">What are you looking for?</label><textarea id="lead-message" name="message" rows="4" placeholder="e.g. 2-3 bedrooms, move-in by fall, budget around $20k"></textarea></div>
+    <button id="lead-form-submit" class="btn btn-gold" type="submit">Send - We'll Reach Out</button>
     <p class="form-note">No pressure, no spam. Just a straight conversation about what's available.</p>
   </form>
 </div>
